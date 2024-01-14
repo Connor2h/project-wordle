@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
 
-const initialState = { guess: "" };
+const initialState = "";
 
 function MyForm() {
   const [guess, setGuess] = useState(initialState);
   const onSubmitHandler = (event) => {
     event.preventDefault();
+    if (guess.length < 5) {
+      window.alert("Please enter exactly 5 characters");
+      return
+    }
     console.log(guess);
-    setGuess(initialState);
+    setGuess('');
   }
 
   const onChangeHandler = (event) => {
-    const oldObject = { ...guess, guess: String(event.target.value).toUpperCase() };
-    setGuess(oldObject);
+    setGuess(String(event.target.value).toUpperCase());
   }
 
   return (
     <form className="guess-input-wrapper" onSubmit={onSubmitHandler}>
       <label htmlFor="guess-input">Enter guess:</label>
-      <input id="guess-input" type="text" value={guess.guess} onChange={onChangeHandler} minLength={5} maxLength={5} />
+      <input required id="guess-input" type="text" value={guess} onChange={onChangeHandler} minLength={5} maxLength={5} />
     </form>
   )
 }
